@@ -1,7 +1,9 @@
-public class IdUtil {
-    public static String nextStudentId(int currentCount) {
+import java.time.Year;
+
+public class IdUtil implements IdGenerator {
+    public String next(int currentCount) {
         int next = currentCount + 1;
         String num = String.format("%04d", next);
-        return "SST-2026-" + num;
+        return "SST-" + Year.now().getValue() + "-" + num;
     }
 }
