@@ -1,7 +1,7 @@
 /**
  * Persistence abstraction for invoices.
- * Pure storage concern — no presentation queries like line counting.
+ * Stores the domain object, not a pre-formatted string.
  */
 public interface InvoiceStore {
-    void save(String id, String content);
+    void save(Invoice invoice);
 }

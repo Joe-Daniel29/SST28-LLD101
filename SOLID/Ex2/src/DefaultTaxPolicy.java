@@ -4,7 +4,7 @@ public class DefaultTaxPolicy implements TaxPolicy {
         return switch (customerType) {
             case STUDENT -> 5.0;
             case STAFF -> 2.0;
-            default -> 8.0;
+            case OTHER -> 8.0;
         };
     }
 }

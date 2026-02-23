@@ -8,7 +8,7 @@ public class Main {
         DiscountPolicy discountPolicy = new DefaultDiscountPolicy();
         PricingPolicy pricingPolicy = new PricingService(taxPolicy, discountPolicy);
         Formatter formatter = new InvoiceFormatter();
-        InvoiceStore store = new FileStore();
+        InvoiceStore store = new InMemoryStore();
         IdGenerator idGenerator = new InvoiceIdGenerator();
 
         CafeteriaSystem sys = new CafeteriaSystem(pricingPolicy, formatter, store, idGenerator);

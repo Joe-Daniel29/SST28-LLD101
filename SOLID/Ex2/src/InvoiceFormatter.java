@@ -20,9 +20,4 @@ public class InvoiceFormatter implements Formatter {
 
         return out.toString();
     }
-
-    @Override
-    public String formatSaveConfirmation(String invoiceId, int lineCount) {
-        return "Saved invoice: " + invoiceId + " (lines=" + lineCount + ")\n";
-    }
 }

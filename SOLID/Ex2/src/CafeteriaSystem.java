@@ -28,21 +28,17 @@ public class CafeteriaSystem {
     public String checkout(CustomerType customerType, List<OrderLine> lines) {
         String invId = idGenerator.next();
 
-        // Resolve menu items here — PricingPolicy stays free of menu concerns
         List<InvoiceLine> resolvedLines = resolveOrderLines(lines);
-        double subtotal = 0.0;
-        for (InvoiceLine il : resolvedLines) {
-            subtotal += il.lineTotal;
-        }
 
-        Invoice inv = pricingPolicy.calculate(invId, customerType, resolvedLines, subtotal);
+        // Subtotal computation fully delegated to PricingPolicy
+        Invoice inv = pricingPolicy.calculate(invId, customerType, resolvedLines);
         String printable = formatter.format(inv);
 
-        store.save(invId, printable);
+        store.save(inv);
 
-        // ALL formatting delegated to Formatter — orchestrator never builds strings
+        // Save confirmation — simple orchestration output, not invoice formatting
         int lineCount = printable.split("\n").length;
-        return printable + formatter.formatSaveConfirmation(invId, lineCount);
+        return printable + "Saved invoice: " + invId + " (lines=" + lineCount + ")\n";
     }
 
     private List<InvoiceLine> resolveOrderLines(List<OrderLine> orders) {

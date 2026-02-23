@@ -1,9 +1,8 @@
 import java.util.*;
 
 /**
- * Concrete pricing: applies tax and discount policies to pre-resolved line
- * items.
- * No longer responsible for menu lookup.
+ * Concrete pricing: computes subtotal internally, then applies tax and
+ * discount policies.
  */
 public class PricingService implements PricingPolicy {
     private final TaxPolicy taxPolicy;
@@ -16,7 +15,12 @@ public class PricingService implements PricingPolicy {
 
     @Override
     public Invoice calculate(String invoiceId, CustomerType customerType,
-            List<InvoiceLine> resolvedLines, double subtotal) {
+            List<InvoiceLine> resolvedLines) {
+        double subtotal = 0.0;
+        for (InvoiceLine il : resolvedLines) {
+            subtotal += il.lineTotal;
+        }
+
         double taxPct = taxPolicy.taxPercent(customerType);
         double tax = subtotal * (taxPct / 100.0);
         double discount = discountPolicy.discountAmount(customerType, subtotal, resolvedLines.size());

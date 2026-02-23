@@ -3,6 +3,9 @@ public class OrderLine {
     public final int qty;
 
     public OrderLine(String itemId, int qty) {
-        this.itemId = itemId; this.qty = qty;
+        if (qty <= 0)
+            throw new IllegalArgumentException("qty must be positive: " + qty);
+        this.itemId = itemId;
+        this.qty = qty;
     }
 }
