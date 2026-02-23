@@ -1,3 +1,3 @@
 public interface DiscountPolicy {
-    double discountAmount(String customerType, double subtotal, int distinctLines);
+    double discountAmount(CustomerType customerType, double subtotal, int distinctLines);
 }

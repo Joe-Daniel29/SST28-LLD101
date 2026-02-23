@@ -1,16 +1,10 @@
 public class DefaultDiscountPolicy implements DiscountPolicy {
     @Override
-    public double discountAmount(String customerType, double subtotal, int distinctLines) {
-        if ("student".equalsIgnoreCase(customerType)) {
-            if (subtotal >= 180.0)
-                return 10.0;
-            return 0.0;
-        }
-        if ("staff".equalsIgnoreCase(customerType)) {
-            if (distinctLines >= 3)
-                return 15.0;
-            return 5.0;
-        }
-        return 0.0;
+    public double discountAmount(CustomerType customerType, double subtotal, int distinctLines) {
+        return switch (customerType) {
+            case STUDENT -> subtotal >= 180.0 ? 10.0 : 0.0;
+            case STAFF -> distinctLines >= 3 ? 15.0 : 5.0;
+            default -> 0.0;
+        };
     }
 }

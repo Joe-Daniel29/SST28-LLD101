@@ -1,10 +1,10 @@
 public class DefaultTaxPolicy implements TaxPolicy {
     @Override
-    public double taxPercent(String customerType) {
-        if ("student".equalsIgnoreCase(customerType))
-            return 5.0;
-        if ("staff".equalsIgnoreCase(customerType))
-            return 2.0;
-        return 8.0;
+    public double taxPercent(CustomerType customerType) {
+        return switch (customerType) {
+            case STUDENT -> 5.0;
+            case STAFF -> 2.0;
+            default -> 8.0;
+        };
     }
 }

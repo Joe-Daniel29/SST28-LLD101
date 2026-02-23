@@ -9,7 +9,7 @@ public class Main {
         PricingPolicy pricingPolicy = new PricingService(taxPolicy, discountPolicy);
         Formatter formatter = new InvoiceFormatter();
         InvoiceStore store = new FileStore();
-        InvoiceIdGenerator idGenerator = new InvoiceIdGenerator();
+        IdGenerator idGenerator = new InvoiceIdGenerator();
 
         CafeteriaSystem sys = new CafeteriaSystem(pricingPolicy, formatter, store, idGenerator);
         sys.addToMenu(new MenuItem("M1", "Veg Thali", 80.00));
@@ -20,6 +20,6 @@ public class Main {
                 new OrderLine("M1", 2),
                 new OrderLine("C1", 1));
 
-        System.out.print(sys.checkout("student", order));
+        System.out.print(sys.checkout(CustomerType.STUDENT, order));
     }
 }
