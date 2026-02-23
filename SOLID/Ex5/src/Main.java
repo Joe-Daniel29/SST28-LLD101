@@ -7,17 +7,16 @@ public class Main {
         Exporter csv = new CsvExporter();
         Exporter json = new JsonExporter();
 
-        System.out.println("PDF: " + safe(pdf, req));
-        System.out.println("CSV: " + safe(csv, req));
-        System.out.println("JSON: " + safe(json, req));
+        // No try/catch needed — exporters honor LSP, errors are results not exceptions
+        System.out.println("PDF: " + describe(pdf.export(req)));
+        System.out.println("CSV: " + describe(csv.export(req)));
+        System.out.println("JSON: " + describe(json.export(req)));
     }
 
-    private static String safe(Exporter e, ExportRequest r) {
-        try {
-            ExportResult out = e.export(r);
-            return "OK bytes=" + out.bytes.length;
-        } catch (RuntimeException ex) {
-            return "ERROR: " + ex.getMessage();
+    private static String describe(ExportResult result) {
+        if (result.error) {
+            return "ERROR: " + result.errorMessage;
         }
+        return "OK bytes=" + result.bytes.length;
     }
 }
